@@ -109,6 +109,9 @@ _NAV = [
     "✍ IC Memo / LP Letter",
     "★ Investment Tracker",
     "◇ Mem0 Memory",
+    "---",
+    "⚡ Pipeline",
+    "💬 Chatbot",
 ]
 _NAV_SELECTABLE = [n for n in _NAV if n != "---"]
 
@@ -164,6 +167,11 @@ for _k, _v in {
     "portfolio_tickers": ["NVDA", "CRM", "GOOGL", "JPM", "WMT", "ADP", "UNH"],
     "workflow_result": None,
     "workflow_logs": [],
+    # CS4 session state
+    "active_page": "pipeline",
+    "chatbot_ticker": "",
+    "chatbot_company": "",
+    "resolved_company": None,
 }.items():
     if _k not in st.session_state:
         st.session_state[_k] = _v
@@ -1897,6 +1905,36 @@ tbody tr:last-child td{border-bottom:none}
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# CS4 — Pipeline & Chatbot pages (imported from views)
+# ═══════════════════════════════════════════════════════════════════════════════
+_views_path = os.path.join(_HERE, "views")
+if _views_path not in sys.path:
+    sys.path.insert(0, _views_path)
+
+from views.pipeline_cs4 import render_pipeline_page
+from views.chatbot_cs4 import render_chatbot_page
+
+
+def page_pipeline():
+    render_pipeline_page()
+
+
+def page_chatbot():
+    # Sync selected_ticker → chatbot_ticker so cs5's company selector drives the chatbot
+    ticker = st.session_state.get("selected_ticker", "")
+    if ticker and ticker != st.session_state.get("chatbot_ticker", ""):
+        try:
+            all_cos = load_all_companies()
+            co = next((c for c in all_cos if c["ticker"] == ticker), None)
+            st.session_state["chatbot_ticker"] = ticker
+            st.session_state["chatbot_company"] = co["name"] if co else ticker
+        except Exception:
+            st.session_state["chatbot_ticker"] = ticker
+            st.session_state["chatbot_company"] = ticker
+    render_chatbot_page()
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # Page dispatch
 # ═══════════════════════════════════════════════════════════════════════════════
 _DISPATCH = {
@@ -1910,6 +1948,8 @@ _DISPATCH = {
     "✍ IC Memo / LP Letter": page_documents,
     "★ Investment Tracker": page_tracker,
     "◇ Mem0 Memory": page_memory,
+    "⚡ Pipeline": page_pipeline,
+    "💬 Chatbot": page_chatbot,
 }
 
 _DISPATCH.get(st.session_state["selected_page"], page_portfolio)()
