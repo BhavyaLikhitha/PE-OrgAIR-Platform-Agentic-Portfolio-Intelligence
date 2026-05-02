@@ -37,7 +37,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN playwright install chromium
 
 # Copy application source code
-# COPY app/ ./app/
+COPY app/ ./app/
 
 # Expose port
 EXPOSE 8000
