@@ -1901,6 +1901,55 @@ tbody tr:last-child td{border-bottom:none}
 .tabs{display:flex;gap:0;margin-bottom:16px;border-bottom:1px solid rgba(0,0,0,0.08);overflow-x:auto}
 .tab{padding:10px 18px;font-size:14px;color:#6b6a65;border-bottom:2px solid transparent;white-space:nowrap}
 .tab.active{color:#4f46e5;border-bottom-color:#4f46e5;font-weight:600}
+/* ===== CS4 Chatbot styles ===== */
+.msg-user-wrap{text-align:right;margin-bottom:14px}
+.bubble-user{display:inline-block;padding:12px 16px;border-radius:12px;font-size:15px;line-height:1.7;max-width:85%;background:#4F46E5;color:#fff}
+.bubble-ai{display:inline-block;padding:12px 16px;border-radius:12px;font-size:15px;line-height:1.7;max-width:90%;border:1px solid rgba(128,128,128,0.2)}
+.bubble-thinking{font-style:italic;opacity:0.5;font-size:13px}
+.cite-tag{display:inline;padding:3px 8px;border-radius:4px;font-size:12px;background:rgba(79,70,229,0.1);color:#4F46E5;margin-left:3px;border:1px solid rgba(79,70,229,0.2);font-weight:500}
+.sq-label-txt{font-size:10px;opacity:0.5;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:7px}
+.ev-header{padding:12px 14px;border-bottom:1px solid rgba(128,128,128,0.15);font-size:13px;font-weight:600;opacity:0.7}
+.ev-card{border:1px solid rgba(128,128,128,0.2);border-radius:7px;padding:10px 12px;margin-bottom:8px}
+.ev-top{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.ev-snippet{font-size:13px;line-height:1.6;opacity:0.8}
+.ev-section{font-size:12px;opacity:0.65;margin-bottom:4px;font-weight:500}
+.ev-score{margin-left:auto;font-size:11px;opacity:0.45}
+.src-badge{font-size:11px;padding:3px 8px;border-radius:20px;font-weight:600}
+.src-sec{background:#f0fdf4;color:#15803d;border:1px solid #86efac}
+.src-job{background:#fffbeb;color:#92400e;border:1px solid #fcd34d}
+.src-gd{background:rgba(128,128,128,0.08);color:#6b7280;border:1px solid rgba(128,128,128,0.2)}
+.src-proxy{background:#eff6ff;color:#1e40af;border:1px solid #93c5fd}
+/* ===== CS4 Score header styles ===== */
+.score-header{border-bottom:1px solid rgba(128,128,128,0.15);padding:10px 0 12px 0;margin-bottom:12px}
+.sh-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.sh-company{font-size:17px;font-weight:600}
+.sh-ticker{font-size:12px;padding:3px 10px;border-radius:5px;font-weight:600;background:rgba(79,70,229,0.12);color:#4F46E5}
+.sh-rec{margin-left:auto;font-size:12px;font-weight:600;padding:5px 14px;border-radius:5px;border:1px solid}
+.rec-proceed{background:#f0fdf4;color:#15803d;border-color:#86efac}
+.rec-caution{background:#fffbeb;color:#92400e;border-color:#fcd34d}
+.rec-pending{background:rgba(128,128,128,0.08);color:#6b7280;border-color:rgba(128,128,128,0.2)}
+.sh-scores{display:flex;border:1px solid rgba(128,128,128,0.2);border-radius:8px;overflow:hidden}
+.sc-block{flex:1;padding:7px 10px;border-right:1px solid rgba(128,128,128,0.15);min-width:0}
+.sc-block:last-child{border-right:none}
+.sc-label{font-size:11px;opacity:0.6;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:0.04em;font-weight:500}
+.sc-val{font-size:20px;font-weight:700}
+.sc-tag{display:inline-flex;font-size:10px;padding:2px 6px;border-radius:3px;margin-top:2px;font-weight:600}
+.tag-high{background:#f0fdf4;color:#15803d}
+.tag-low{background:#fffbeb;color:#92400e}
+.tag-med{background:#eff6ff;color:#1e40af}
+.sc-block.sc-main{background:rgba(79,70,229,0.08);flex:0 0 140px}
+.sc-main .sc-label{color:#4F46E5;opacity:1}
+.sc-main .sc-val{font-size:24px;color:#4F46E5}
+.signal-row{display:flex;margin-top:8px;border:1px solid rgba(128,128,128,0.15);border-radius:6px;overflow:hidden}
+.sig-block{flex:1;padding:8px 12px;border-right:1px solid rgba(128,128,128,0.15)}
+.sig-block:last-child{border-right:none}
+.sig-label{font-size:11px;opacity:0.65;margin-bottom:3px;font-weight:500}
+.sig-val{font-size:15px;font-weight:600}
+.sig-source{font-size:10px;opacity:0.45;margin-top:2px;font-style:italic}
+.dim-scores-grid{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;padding:10px;border:1px solid rgba(128,128,128,0.2);border-radius:8px;background:rgba(79,70,229,0.03)}
+.dim-score-item{flex:1 1 120px;min-width:100px;padding:8px 10px;border-radius:6px;background:white;border:1px solid rgba(128,128,128,0.15)}
+.dim-score-label{font-size:9px;opacity:0.6;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:3px}
+.dim-score-value{font-size:18px;font-weight:700;color:#4F46E5}
 </style>""", unsafe_allow_html=True)
 
 
