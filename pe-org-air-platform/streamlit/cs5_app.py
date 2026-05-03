@@ -201,11 +201,12 @@ def _api_ok() -> tuple[bool, str]:
     import urllib.request
     try:
         _url = st.secrets.get("API_BASE_URL", os.environ.get("API_BASE_URL", BASE)).rstrip("/")
-        req = urllib.request.urlopen(f"{_url}/healthz", timeout=30)
+        # /healthz returns 404 on Cloud Run — use root endpoint instead
+        req = urllib.request.urlopen(f"{_url}/", timeout=30)
         if req.status == 200:
-            return True, f"CS1-CS4 services connected ({_url})"
+            return True, "CS1-CS4 services connected"
     except Exception as e:
-        return False, f"CS1-CS4 unavailable — {_url} — {e}"
+        return False, f"CS1-CS4 unavailable — check API ({e})"
     return False, "CS1-CS4 unavailable — check API"
 
 
