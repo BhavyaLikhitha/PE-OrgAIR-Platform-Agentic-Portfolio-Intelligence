@@ -61,7 +61,8 @@ from evidence_display import render_company_evidence_panel, fetch_all_justificat
 
 # ── Constants ────────────────────────────────────────────────────────────────
 BASE = api_base_url()
-REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
+# REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
+REDIS_URL = st.secrets.get("REDIS_URL", os.environ.get("REDIS_URL", "redis://localhost:6379/0"))
 CACHE_TTL = 86400  # 24 hours
 
 
@@ -199,7 +200,9 @@ def _api_ok() -> tuple[bool, str]:
     """Check if API is reachable. Uses fresh request (not cached session)."""
     import urllib.request
     try:
-        req = urllib.request.urlopen(f"{BASE}/healthz", timeout=10)
+        # Read URL fresh from secrets each call (not cached BASE constant)
+        _url = st.secrets.get("API_BASE_URL", os.environ.get("API_BASE_URL", BASE)).rstrip("/")
+        req = urllib.request.urlopen(f"{_url}/healthz", timeout=30)
         if req.status == 200:
             return True, "CS1-CS4 services connected"
     except Exception:
