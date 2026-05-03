@@ -7,7 +7,6 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     gcc \
     curl \
-    # Playwright / Chromium dependencies
     libnss3 \
     libnspr4 \
     libatk1.0-0 \

@@ -1,3 +1,6 @@
+cloud_run_env.yaml
+deploy_cloudrun.sh
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
