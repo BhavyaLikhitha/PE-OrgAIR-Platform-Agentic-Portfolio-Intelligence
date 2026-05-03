@@ -23,7 +23,8 @@ from pathlib import Path
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 
-BASE_URL = "http://localhost:8000"
+import os
+BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:8000").rstrip("/")
 
 # ── Chat history persistence ──────────────────────────────────────────────────
 CHAT_HISTORY_DIR = Path(__file__).parent.parent / "data" / "chat_history"
