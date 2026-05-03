@@ -1907,9 +1907,9 @@ tbody tr:last-child td{border-bottom:none}
 # ═══════════════════════════════════════════════════════════════════════════════
 # CS4 — Pipeline & Chatbot pages (imported from views)
 # ═══════════════════════════════════════════════════════════════════════════════
-_views_path = os.path.join(_HERE, "views")
-if _views_path not in sys.path:
-    sys.path.insert(0, _views_path)
+# Re-add _HERE to sys.path so `views` package is importable (it was stripped above)
+if _HERE not in sys.path:
+    sys.path.insert(0, _HERE)
 
 from views.pipeline_cs4 import render_pipeline_page
 from views.chatbot_cs4 import render_chatbot_page
