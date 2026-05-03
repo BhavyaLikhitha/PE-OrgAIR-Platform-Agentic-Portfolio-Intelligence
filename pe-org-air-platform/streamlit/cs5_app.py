@@ -200,13 +200,12 @@ def _api_ok() -> tuple[bool, str]:
     """Check if API is reachable. Uses fresh request (not cached session)."""
     import urllib.request
     try:
-        # Read URL fresh from secrets each call (not cached BASE constant)
         _url = st.secrets.get("API_BASE_URL", os.environ.get("API_BASE_URL", BASE)).rstrip("/")
         req = urllib.request.urlopen(f"{_url}/healthz", timeout=30)
         if req.status == 200:
-            return True, "CS1-CS4 services connected"
-    except Exception:
-        pass
+            return True, f"CS1-CS4 services connected ({_url})"
+    except Exception as e:
+        return False, f"CS1-CS4 unavailable — {_url} — {e}"
     return False, "CS1-CS4 unavailable — check API"
 
 
