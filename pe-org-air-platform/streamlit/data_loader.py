@@ -15,7 +15,8 @@ import streamlit as st
 # ---------------------------------------------------------------------------
 # API_BASE = os.getenv("FASTAPI_URL", "http://localhost:8000")
 # API_BASE = os.getenv("FASTAPI_URL", "https://pe-orgair-platform-scoring-engine.onrender.com")
-API_BASE = st.secrets.get("FASTAPI_URL", os.getenv("FASTAPI_URL", "http://localhost:8000"))
+# API_BASE = st.secrets.get("FASTAPI_URL", os.getenv("FASTAPI_URL", "http://localhost:8000"))
+API_BASE = st.secrets.get("API_BASE_URL", os.getenv("API_BASE_URL", st.secrets.get("FASTAPI_URL", os.getenv("FASTAPI_URL", "http://localhost:8000"))))
 RESULTS_DIR = Path(__file__).parent.parent / "results"
 
 CS3_TICKERS = ["NVDA", "JPM", "WMT", "GE", "DG"]
