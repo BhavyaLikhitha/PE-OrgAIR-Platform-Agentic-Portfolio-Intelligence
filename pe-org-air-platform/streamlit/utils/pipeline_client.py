@@ -47,7 +47,12 @@ from typing import Optional, Dict, Any, Callable, List
 
 logger = logging.getLogger(__name__)
 
-API_BASE = os.getenv("API_BASE_URL", "http://localhost:8000")
+# API_BASE = os.getenv("API_BASE_URL", "http://localhost:8000")
+try:
+    import streamlit as _st
+    API_BASE = _st.secrets.get("API_BASE_URL", os.getenv("API_BASE_URL", "http://localhost:8000"))
+except Exception:
+    API_BASE = os.getenv("API_BASE_URL", "http://localhost:8000")
 REQUEST_TIMEOUT_SHORT = 30
 REQUEST_TIMEOUT_LONG  = 600   # signals/score/all takes 5+ min (jobs + patents + leadership)
 

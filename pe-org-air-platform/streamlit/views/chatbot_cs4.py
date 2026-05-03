@@ -24,11 +24,19 @@ from pathlib import Path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 
 import os
-BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:8000").rstrip("/")
+# BASE_URL = "http://localhost:8000"
+try:
+    import streamlit as _st
+    BASE_URL = _st.secrets.get("API_BASE_URL", os.environ.get("API_BASE_URL", "http://localhost:8000")).rstrip("/")
+except Exception:
+    BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:8000").rstrip("/")
 
 # ── Chat history persistence ──────────────────────────────────────────────────
 CHAT_HISTORY_DIR = Path(__file__).parent.parent / "data" / "chat_history"
-CHAT_HISTORY_DIR.mkdir(parents=True, exist_ok=True)
+try:
+    CHAT_HISTORY_DIR.mkdir(parents=True, exist_ok=True)
+except Exception:
+    pass  # read-only filesystem on Streamlit Cloud — history in session state only
 
 
 def _load_chat_history(ticker: str) -> list:

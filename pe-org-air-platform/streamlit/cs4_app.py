@@ -262,7 +262,10 @@ for k, v in {
 def _fetch_companies() -> list[dict]:
     """Fetch all companies from Snowflake via API."""
     try:
-        r = requests.get("http://localhost:8000/api/v1/companies/all")
+        import os
+        # r = requests.get("http://localhost:8000/api/v1/companies/all")
+        base = st.secrets.get("API_BASE_URL", os.environ.get("API_BASE_URL", "http://localhost:8000")).rstrip("/")
+        r = requests.get(f"{base}/api/v1/companies/all")
         if r.status_code == 200:
             return r.json().get("items", [])
     except Exception:

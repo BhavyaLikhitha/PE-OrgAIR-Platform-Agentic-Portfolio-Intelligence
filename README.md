@@ -13,6 +13,10 @@ Multi-agent due diligence platform that extends CS1–CS4's scoring and RAG pipe
 
 | Resource | URL |
 |----------|-----|
+| **Streamlit App (Live)** | [ai-readiness-portfolio-intelligence.streamlit.app](https://ai-readiness-portfolio-intelligence.streamlit.app) |
+| **FastAPI Backend (GCP Cloud Run)** | [pe-orgair-api-657003816696.us-east1.run.app](https://pe-orgair-api-657003816696.us-east1.run.app) |
+| **API Docs (Swagger UI)** | [/docs](https://pe-orgair-api-657003816696.us-east1.run.app/docs) |
+| **Redis Cache (Redis Cloud)** | redis-10532.c74.us-east-1-4.ec2.cloud.redislabs.com:10532 |
 | **GitHub Repository** | [PE_OrgAIR_Platform_Agentic_Intelligence](https://github.com/BigDataIA-Spring26-Team-5/PE-OrgAIR-Platform-Agentic-Portfolio-Intelligence) |
 | **Project Codelabs** | [CS5 Walkthrough](https://codelabs-preview.appspot.com/?file_id=1Xbaf3coFFKOvyNASjPFO4bATrMhH-dDIJPSaQaHsngY#0)|
 | **Demo Video** | [SharePoint Video](https://northeastern-my.sharepoint.com/personal/bukka_b_northeastern_edu/_layouts/15/stream.aspx?id=%2Fpersonal%2Fbukka%5Fb%5Fnortheastern%5Fedu%2FDocuments%2FRecordings%2FCall%20with%20Aqeel%20and%201%20other%2D20260327%5F152028%2DMeeting%20Recording%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Ec4496388%2Dd93c%2D4840%2Daf9c%2D00c66def3994&isDarkMode=true)|
