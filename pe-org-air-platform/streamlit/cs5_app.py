@@ -90,8 +90,8 @@ def _cache_set(key: str, value, ttl: int = CACHE_TTL):
 pio.templates["pe_orgair"] = go.layout.Template(
     layout=dict(
         font=dict(family="DM Sans, sans-serif"),
-        plot_bgcolor="white",
-        paper_bgcolor="white",
+        plot_bgcolor="rgba(0,0,0,0)",
+        paper_bgcolor="rgba(0,0,0,0)",
         colorway=["#6366f1", "#14b8a6", "#f59e0b", "#f97316", "#8b5cf6", "#ef4444"],
     )
 )
