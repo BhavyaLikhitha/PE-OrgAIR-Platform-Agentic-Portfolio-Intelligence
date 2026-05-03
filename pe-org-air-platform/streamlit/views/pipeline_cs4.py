@@ -25,7 +25,12 @@ from utils.company_resolver import resolve_company
 from utils.pipeline_client  import PipelineClient, PipelineStepResult
 
 import os
-BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:8000").rstrip("/")
+# BASE_URL = "http://localhost:8000"
+try:
+    import streamlit as _st
+    BASE_URL = _st.secrets.get("API_BASE_URL", os.environ.get("API_BASE_URL", "http://localhost:8000")).rstrip("/")
+except Exception:
+    BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:8000").rstrip("/")
 
 PIPELINE_STEPS = [
     ("Company Setup",     "🏢", "POST /api/v1/companies"),
@@ -496,7 +501,7 @@ def render_pipeline_page():
         cik       = resolved.cik or "N/A"
         rev       = resolved.revenue_millions
         emp       = resolved.employee_count
-        initials  = ticker[:2].upper()
+        # initials  = ticker[:2].upper()
         confirmed = st.session_state.get("company_confirmed", False)
         is_existing = st.session_state.get("company_is_existing", False)
 
@@ -507,7 +512,6 @@ def render_pipeline_page():
 
         st.markdown(
             f'<div class="{card_cls}">'
-            f'<div class="co-logo">{initials}</div>'
             f'<div style="flex:1">'
             f'<div style="font-size:18px;font-weight:700;margin-bottom:5px">{name}</div>'
             f'<div style="font-size:14px;opacity:0.7;line-height:1.8">{meta_str}</div>'
