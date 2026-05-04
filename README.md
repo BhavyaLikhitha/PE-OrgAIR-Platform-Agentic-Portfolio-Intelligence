@@ -19,7 +19,6 @@ Multi-agent due diligence platform that extends CS1–CS4's scoring and RAG pipe
 | **Redis Cache (Redis Cloud)** | redis-10532.c74.us-east-1-4.ec2.cloud.redislabs.com:10532 |
 | **GitHub Repository** | [PE_OrgAIR_Platform_Agentic_Intelligence](https://github.com/BigDataIA-Spring26-Team-5/PE-OrgAIR-Platform-Agentic-Portfolio-Intelligence) |
 | **Project Codelabs** | [CS5 Walkthrough](https://codelabs-preview.appspot.com/?file_id=1Xbaf3coFFKOvyNASjPFO4bATrMhH-dDIJPSaQaHsngY#0)|
-| **Demo Video** | [SharePoint Video](https://northeastern-my.sharepoint.com/personal/bukka_b_northeastern_edu/_layouts/15/stream.aspx?id=%2Fpersonal%2Fbukka%5Fb%5Fnortheastern%5Fedu%2FDocuments%2FRecordings%2FCall%20with%20Aqeel%20and%201%20other%2D20260327%5F152028%2DMeeting%20Recording%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Ec4496388%2Dd93c%2D4840%2Daf9c%2D00c66def3994&isDarkMode=true)|
 |**Architecture Diagram**|[CS5 Architecture Diagram](https://mermaid.ai/d/f7139255-cc68-4b7c-988d-a5ecbfafba1a)|
 
 ---
@@ -33,11 +32,9 @@ Multi-agent due diligence platform that extends CS1–CS4's scoring and RAG pipe
 5. [Pipeline Flows](#5-pipeline-flows)
 6. [API Endpoints & Streamlit Dashboard](#6-api-endpoints--streamlit-dashboard)
 7. [Setup & Installation](#7-setup--installation)
-8. [Project Structure](#8-project-structure)
-9. [Summary & Key Takeaways](#9-summary--key-takeaways)
-10. [Design Decisions & Tradeoffs](#10-design-decisions--tradeoffs)
-11. [Known Limitations](#11-known-limitations)
-12. [Team Member Contributions & AI Usage](#12-team-member-contributions--ai-usage)
+8. [Summary & Key Takeaways](#9-summary--key-takeaways)
+9. [Design Decisions & Tradeoffs](#10-design-decisions--tradeoffs)
+10. [Known Limitations](#11-known-limitations)
 
 ---
 
@@ -490,129 +487,7 @@ Test results output to `test_results/` (JUnit XML + coverage HTML).
 
 ---
 
-## 8. Project Structure
-
-```
-pe-org-air-platform/
-├── app/
-│   ├── main.py                          # FastAPI entry point (18 routers)
-│   ├── shutdown.py                      # Graceful shutdown event
-│   ├── core/
-│   │   ├── dependencies.py              # Singleton DI providers
-│   │   ├── errors.py                    # PlatformError hierarchy
-│   │   ├── lifespan.py                  # Startup init + shutdown hooks
-│   │   └── logging_config.py            # structlog configuration
-│   ├── middleware/
-│   │   └── correlation.py               # X-Correlation-ID middleware
-│   ├── config/
-│   │   ├── __init__.py                  # App settings (Snowflake, Redis, S3, LLM keys)
-│   │   ├── company_mappings.py          # CS3_PORTFOLIO, COMPANY_NAME_MAPPINGS, CompanyRegistry
-│   │   └── retrieval_settings.py        # RAG tunables
-│   ├── routers/                         # 18 HTTP endpoint routers
-│   │   ├── health.py                    # /healthz, /health
-│   │   ├── config.py                    # Scoring params, weights, baselines
-│   │   ├── companies.py                 # CS1: Company CRUD + Groq enrichment
-│   │   ├── portfolios.py                # CS1: Portfolio management
-│   │   ├── documents.py                 # CS2: SEC collection / parsing / chunking
-│   │   ├── signals.py                   # CS2: Signal collection (6 categories)
-│   │   ├── evidence.py                  # CS2: Evidence summary
-│   │   ├── dimension_scores.py          # CS3: Dimension weight config
-│   │   ├── scoring.py                   # CS3: Dimension scoring pipeline
-│   │   ├── tc_vr_scoring.py             # CS3: Talent Concentration + V^R
-│   │   ├── position_factor.py           # CS3: Position Factor
-│   │   ├── hr_scoring.py                # CS3: Human Readiness H^R
-│   │   ├── orgair_scoring.py            # CS3: Org-AI-R (+ assessment_router)
-│   │   ├── rag.py                       # CS4: RAG indexing + search + chatbot
-│   │   ├── analyst_notes.py             # CS4: Analyst notes
-│   │   ├── bonus.py                     # CS4: Bonus analysis
-│   │   ├── history.py                   # CS4: Assessment history
-│   │   └── due_diligence.py             # CS5: LangGraph DD workflow + HITL
-│   ├── services/
-│   │   ├── signals/                     # 6 signal collection services
-│   │   │   ├── job_signal_service.py    # JobSpy -> technology_hiring
-│   │   │   ├── patent_signal_service.py # PatentsView -> innovation_activity
-│   │   │   ├── tech_signal_service.py   # BuiltWith -> digital_presence
-│   │   │   ├── leadership_service.py    # DEF-14A -> leadership_signals
-│   │   │   ├── board_composition_service.py # Board -> board_composition
-│   │   │   ├── culture_signal_service.py # Glassdoor -> culture
-│   │   │   └── evidence_service.py      # Evidence aggregation
-│   │   ├── search/
-│   │   │   └── vector_store.py          # ChromaDB client + EMBEDDING_MODEL
-│   │   ├── retrieval/
-│   │   │   ├── hybrid.py                # BM25 + dense hybrid retrieval + RRF
-│   │   │   ├── hyde.py                  # HyDE query enhancement
-│   │   │   └── dimension_mapper.py      # Source -> dimension routing
-│   │   ├── justification/
-│   │   │   └── generator.py             # LLM justification generator
-│   │   ├── llm/
-│   │   │   └── router.py                # ModelRouter (Groq/Claude/DeepSeek via LiteLLM)
-│   │   ├── integration/                 # CS5 integration clients
-│   │   │   ├── cs1_client.py            # Company metadata
-│   │   │   ├── cs2_client.py            # Signal evidence
-│   │   │   ├── cs3_client.py            # Scoring & rubric
-│   │   │   └── cs4_client.py            # RAG & justification
-│   │   ├── value_creation/
-│   │   │   ├── ebitda.py                # EBITDA projections
-│   │   │   └── gap_analysis.py          # Dimension gap analysis
-│   │   ├── reporting/
-│   │   │   ├── ic_memo.py               # IC memo (.docx/.pdf/.txt)
-│   │   │   └── lp_letter.py             # LP letter (.pdf/.txt)
-│   │   ├── tracking/
-│   │   │   ├── history_service.py       # Assessment snapshots + trends
-│   │   │   └── investment_tracker.py    # ROI computation
-│   │   ├── analytics/
-│   │   │   └── fund_air.py              # Fund-AI-R calculator
-│   │   ├── observability/
-│   │   │   └── metrics.py               # Prometheus counters/histograms
-│   │   ├── workflows/
-│   │   │   └── ic_prep.py               # IC meeting package workflow
-│   │   ├── collection/
-│   │   │   └── analyst_notes.py         # AnalystNotesCollector
-│   │   ├── composite_scoring_service.py # TC, V^R, PF, H^R, Org-AI-R orchestrator
-│   │   ├── portfolio_data_service.py    # Unified CS1-CS4 facade
-│   │   ├── cache.py                     # Redis TTL cache helpers
-│   │   ├── s3_storage.py                # AWS S3 client wrapper
-│   │   └── task_store.py                # Redis-backed background task state
-│   ├── agents/                          # CS5 LangGraph multi-agent
-│   │   ├── state.py                     # DueDiligenceState TypedDict + AgentMessage
-│   │   ├── specialists.py               # MCPToolCaller + 4 specialist agents
-│   │   ├── supervisor.py                # StateGraph factory + HITL interrupt node
-│   │   └── memory.py                    # Mem0 semantic memory (optional)
-│   ├── mcp/
-│   │   └── server.py                    # MCP stdio server (6 tools, 2 resources, 2 prompts)
-│   ├── pipelines/                       # CS2 data collection logic
-│   │   ├── sec_edgar.py                 # SEC EDGAR filing collector
-│   │   ├── job_signals.py               # Job posting signal processing
-│   │   ├── patent_signals.py            # Patent signal processing
-│   │   ├── tech_signals.py              # Technology signal analysis
-│   │   ├── leadership_analyzer.py       # Leadership analysis
-│   │   ├── board_analyzer.py            # Board composition analysis
-│   │   └── glassdoor_collector.py       # Glassdoor culture data
-│   ├── repositories/                    # 11 Snowflake data access modules
-│   ├── scoring/                         # 10 calculation modules (evidence_mapper, rubric, TC, VR, PF, HR, synergy, orgair, confidence)
-│   ├── models/                          # Pydantic domain models
-│   ├── schemas/                         # API response models
-│   ├── guardrails/                      # RAG input/output validation
-│   ├── prompts/                         # LLM prompt templates
-│   ├── scripts/                         # Utility scripts (seed_history, fill_sectors, etc.)
-│   └── database/                        # SQL schemas + seed data
-├── streamlit/
-│   ├── cs5_app.py                       # CS5 dashboard entry point (10 pages)
-│   ├── views/                           # 8 view modules
-│   └── components/                      # Charts + evidence display
-├── dags/                                # 3 Airflow DAGs
-├── tests/                               # 25+ pytest test files
-├── exercises/                           # Learning materials
-├── data/                                # Local data cache
-├── results/                             # Pipeline output JSON + reports
-├── docker-compose.yml                   # API + Redis + Airflow
-├── Dockerfile
-└── pyproject.toml                       # Poetry config (Python >=3.11, 50+ deps)
-```
-
----
-
-## 9. Summary & Key Takeaways
+## 8. Summary & Key Takeaways
 
 CS5 takes everything built in CS1 through CS4 and automates the full due diligence workflow. The scoring pipeline and RAG layer were solid, but analysts still had to manually orchestrate each step — run scoring, request justifications, project EBITDA impact, perform gap analysis, and compile IC materials. That is what CS5 solves.
 
@@ -638,7 +513,7 @@ All LLM calls route through LiteLLM with a **$5/day budget** enforced by `ModelR
 
 ---
 
-## 10. Design Decisions & Tradeoffs
+## 9. Design Decisions & Tradeoffs
 
 - **MCP tools over direct service calls:** Agents interact with the platform exclusively through the MCP tool server rather than calling services directly. This adds HTTP latency per tool call but enforces a single source of truth — agents cannot bypass scoring logic or RAG pipeline. The MCPToolCaller HTTP wrapper mirrors tool dispatch, so adding a new tool to the MCP server automatically makes it available to all agents.
 
@@ -654,7 +529,7 @@ All LLM calls route through LiteLLM with a **$5/day budget** enforced by `ModelR
 
 ---
 
-## 11. Known Limitations
+## 10. Known Limitations
 
 1. **Composite scoring limited to 7 companies.** The scoring calibration dicts (`EXPECTED_TC_VR_RANGES`, `MARKET_CAP_PERCENTILES`, `COMPANY_SECTORS`) are hardcoded for NVDA, CRM, GOOGL, JPM, WMT, ADP, UNH. Scoring arbitrary tickers produces uncalibrated results.
 
@@ -670,38 +545,4 @@ All LLM calls route through LiteLLM with a **$5/day budget** enforced by `ModelR
 
 ---
 
-## 12. Team Member Contributions & AI Usage
-
-### Bhavya
-
-Bhavya designed the end-to-end pipeline architecture and built the Streamlit application, covering the 10-page portfolio intelligence dashboard with portfolio overview, evidence analysis, assessment history, agentic workflow control, Fund-AI-R analytics, MCP server inspection, Prometheus metrics visualization, IC memo/LP letter generation, investment tracking, and Mem0 memory viewing. She also worked alongside Aqeel to integrate the Airflow scheduling layer.
-
-### Deepika
-
-Deepika built the CS1, CS2, CS3, and CS4 client wrapper files that form the bridge between the agent layer and the prior case study pipelines. She extended the integration layer with the `PortfolioDataService` unified facade and handled project documentation including the architecture diagrams and Codelabs walkthrough.
-
-### Aqeel
-
-Aqeel designed and built the CS5 agent framework — the LangGraph `StateGraph` with supervisor routing, four specialist agents (SEC Analyst, Scorer, Evidence, Value Creator), the MCP tool server (6 tools, 2 resources, 2 prompts), HITL interrupt/resume gates, and the `MCPToolCaller` HTTP wrapper. He also built the value creation analytics (EBITDACalculator, GapAnalyzer), report generators (ICMemoGenerator, LPLetterGenerator), portfolio analytics (FundAIRCalculator, AssessmentHistoryService, InvestmentTracker), Prometheus observability layer, and the Mem0 semantic memory integration.
-
-### AI Tools Usage Disclosure
-
-We used Claude Code (architecture, scaffolding, and documentation) and ChatGPT (formula verification). All AI-generated code was reviewed and tested against expected score ranges. AI served as a productivity aid, not a substitute for understanding the scoring methodology and agent orchestration patterns.
-
-### Resources
-
-| Resource | Link |
-|:---|:---|
-| GitHub Repository | https://github.com/BigDataIA-Spring26-Team-5/PE_OrgAIR_Platform_AgenticDD.git |
-| FastAPI Documentation | https://fastapi.tiangolo.com/ |
-| LangGraph Documentation | https://langchain-ai.github.io/langgraph/ |
-| MCP Specification | https://modelcontextprotocol.io/ |
-| Snowflake Documentation | https://docs.snowflake.com/ |
-| SEC EDGAR | https://www.sec.gov/edgar |
-| Streamlit Documentation | https://docs.streamlit.io/ |
-| Prometheus Documentation | https://prometheus.io/docs/ |
-
----
-
-*Big Data and Intelligent Analytics — Spring 2026*
 *Case Study 5: Multi-Agent Due Diligence — "From RAG Answers to Agentic Investment Decisions"*
